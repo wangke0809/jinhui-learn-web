@@ -22,7 +22,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | 
 
 The script clones the nvm repository to `~/.nvm` and adds the source line to your profile (`~/.bash_profile`, `~/.zshrc`, `~/.profile`, or` ~/.bashrc`).
 
-**Note: **On Linux, after running the install script, if you get nvm: command not found or see no feedback from your terminal after you type:
+**Note**: On Linux, after running the install script, if you get nvm: command not found or see no feedback from your terminal after you type:
 
 ```bash
 command -v nvm
