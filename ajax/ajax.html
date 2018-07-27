@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>ajax</title>
+    <title>ajax</title>
     <!-- 引入jquery，用于操作dom与使用ajax-->
     <script src="./jquery-3.3.1.js"></script>
 </head>
@@ -14,7 +14,7 @@
 <hr />
 
 <h1>查看GET请求效果</h1>
-<a href="/love?name=jinhui">通过浏览器进行GET请求</a> <br /> 注意URL里面，如何GET传参
+<a href="/love?name=jinhui">通过浏览器进行GET请求</a> <br /> <strong>注意URL里面，如何GET传参</strong>
 <hr />
 
 <h1>使用XMLHttpRequest进行GET请求</h1>
@@ -23,7 +23,11 @@
 <button onclick="xml_get(false);">同步进行GET请求</button>
 <button onclick="xml_post(true);">异步进行POST请求</button>
 <button onclick="xml_post(false);">同步进行POST请求</button>
-<div id="res1">请查看代码，体验异步和同步的区别<br /></div>
+<button onclick="ajax_get(true);">JQ异步进行GET请求</button>
+<button onclick="ajax_get(false);">JQ同步进行GET请求</button>
+<button onclick="ajax_post(true);">JQ异步进行POST请求</button>
+<button onclick="ajax_post(false);">JQ同步进行POST请求</button>
+<div id="res1"><strong>请查看代码，体验异步和同步的区别</strong><br /></div>
 <script type="text/javascript">
     // 新建个XMLHTTP实例，考虑了下兼容的情况
     var xmlhttp;
@@ -81,10 +85,79 @@
         $('#res1').append('请求已经发出');
         $('#res1').append('<br />');
     }
+    
+    // 使用JQ实现AJAX GET
+    // 参考手册：http://hemin.cn/jq/jQuery.ajax.html
+    function ajax_get(async_) {
+        name = $('#xml_get_input').val();
+        var config = {
+            type: 'GET',
+            url: "/love?name=" + name,
+            dataType: 'text', // json ...
+            async: async_,
+            success: function (data){
+                $('#res1').append(data);
+                $('#res1').append('<br />');
+            }
+        }
+
+        $.ajax(config);
+        $('#res1').append('请求已经发出');
+        $('#res1').append('<br />');
+    }
+
+    // 使用JQ实现AJAX POST
+    function ajax_post(async_) {
+        name = $('#xml_get_input').val();
+        var config = {
+            type: 'POST',
+            url: '/post',
+            data: 'name=' + name,
+            dataType: 'text', // json ...
+            async: async_,
+            success: function (data){
+                $('#res1').append(data);
+                $('#res1').append('<br />');
+            }
+        }
+
+        $.ajax(config);
+        $('#res1').append('请求已经发出');
+        $('#res1').append('<br />');
+    }
+
+    // 除了$.ajax方法，还有$.get, $.post, $.getJSON等，都是基于$.ajax的封装，方便使用，具体可以看一下手册。
 
 </script>
 <hr />
 
-<h1></h1>
+<h1>作业：自定义AJAX函数</h1>
+<input id="my_input" type="text" name="name">
+<button onclick="my_get();">异步进行GET请求</button>
+<button onclick="my_post();">进行POST请求</button>
+<div id="my_res"></div>
+<script type="text/javascript">
+    
+    // 使用XMLHTTP对象，完成下面my_ajax函数
+	// 输入类似jq的ajax，传入一个config
+	// config中包含请求类型，参数，以及成功回调函数
+    function my_ajax(config){
+
+    }
+
+	// 通过调用my_ajax实现get请求接口
+    function my_get() {
+        var config = {};
+        my_ajax(config);
+    }
+	
+	// 通过调用my_ajax实现post请求接口
+    function my_post() {
+        var config = {};
+        my_ajax(config);
+    }
+
+</script>
+<hr />
 </body>
 </html>

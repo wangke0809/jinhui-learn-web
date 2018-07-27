@@ -6,15 +6,11 @@
 
 `AJAX`是`Asynchronous JavaScript and XML`的缩写，字面翻译为`异步的JavaScript和XML`,大致解释为使用`JavaScrip`异步请求网络。
 
-
-
 需要注意的是：
 
 - `AJAX`不是新的编程语言，而是一种使用现有标准的**方法**。
 - `AJAX`最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。  
 - `AJAX`不需要任何浏览器插件，但需要用户浏览器允许执行`JavaScript`。 
-
-
 
 ## AJAX原理
 
@@ -47,10 +43,37 @@ send(string)
 // readyState 的四个状态
 ```
 
-
-
 ## 做个试验
 
+使用`npm`创建工程在`nodejs`目录下的文档已经提到，本目录(`ajax`)下`server.js`为服务端程序，已经详细注释。`ajax.html`用不同方式实现了`AJAX`。通过`npm start`运行工程，服务端接口参见`server.js`具体内容。当然，别忘了先`npm install`。
 
+接口提示：
 
-使用`npm`创建工程在`nodejs`目录下的文档已经提到，本目录(`ajax`)下`server.js`为服务端程序，`ajax.html`用不同方式实现了`AJAX`。通过`npm start`运行工程，服务端接口参见`server.js`具体内容。
+GET接口：`/love?name=xxx`
+POST接口：`/post`，参数名`name`
+ajax.html页面：`/ajax.html`
+
+## 作业！
+
+见ajax.html
+
+```javascript
+// 使用XMLHTTP对象，完成下面my_ajax函数
+// 输入类似jq的ajax，传入一个config
+// config中包含请求类型，参数，以及成功回调函数
+function my_ajax(config){
+
+}
+
+// 通过调用my_ajax实现get请求接口
+function my_get() {
+	var config = {};
+	my_ajax(config);
+}
+
+// 通过调用my_ajax实现post请求接口
+function my_post() {
+	var config = {};
+	my_ajax(config);
+}
+```
