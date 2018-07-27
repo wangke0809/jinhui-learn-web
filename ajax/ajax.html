@@ -2,8 +2,89 @@
 <html>
 <head>
 	<title>ajax</title>
+    <!-- 引入jquery，用于操作dom与使用ajax-->
+    <script src="./jquery-3.3.1.js"></script>
 </head>
 <body>
+<h1>使用表单进行POST请求</h1>
+<form method="post" action="/post">
+    <input type="text" name="name">
+    <button>submit</button>
+</form>
+<hr />
 
+<h1>查看GET请求效果</h1>
+<a href="/love?name=jinhui">通过浏览器进行GET请求</a> <br /> 注意URL里面，如何GET传参
+<hr />
+
+<h1>使用XMLHttpRequest进行GET请求</h1>
+<input id="xml_get_input" type="text" name="name">
+<button onclick="xml_get(true);">异步进行GET请求</button>
+<button onclick="xml_get(false);">同步进行GET请求</button>
+<button onclick="xml_post(true);">异步进行POST请求</button>
+<button onclick="xml_post(false);">同步进行POST请求</button>
+<div id="res1">请查看代码，体验异步和同步的区别<br /></div>
+<script type="text/javascript">
+    // 新建个XMLHTTP实例，考虑了下兼容的情况
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {   // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    }
+    else
+    {   // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    // 监听readyState的变化
+    xmlhttp.onreadystatechange = function () { // 状态发生变化时，函数被回调
+        if (xmlhttp.readyState === 4) { // 成功完成
+            // 判断响应结果:
+            if (xmlhttp.status === 200) {
+                // 成功，通过responseText拿到响应的文本
+                $('#res1').append(xmlhttp.responseText);
+                $('#res1').append('<br />');
+            } else {
+                // 失败，根据响应码判断失败原因
+                $('#res1').append(xmlhttp.status);
+                $('#res1').append('<br />');
+            }
+        } else {
+            // HTTP请求还在继续，其他状态可以不做任何操作...
+        }
+    }
+
+    // 实现GET请求
+    function xml_get(async) {
+        // 获取输入的值
+        name = $('#xml_get_input').val();
+        // 这里拼接get请求参数
+        // GET请求核心代码就两句，先open，再send，send不需要发送数据，POST时，send发送post的数据
+        xmlhttp.open("GET","/love?name=" + name, async);
+        xmlhttp.send();
+        $('#res1').append('请求已经发出');
+        $('#res1').append('<br />');
+    }
+
+    // 实现POST请求
+    function xml_post(async) {
+        name = $('#xml_get_input').val();
+        // POST的核心代码算三句，除了open，send还有个设置请求头setRequestHeader
+        // 只有设置Content-Type：application/x-www-form-urlencoded后，服务端才能接受到POST请求的参数
+        xmlhttp.open("POST","/post", async);
+        post_data = 'name=' + name;
+        console.log(post_data)
+        //用POST的时候一定要有这句,否则后端接收不到参数
+        xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        // 发送post请求参数
+        xmlhttp.send(post_data);
+        $('#res1').append('请求已经发出');
+        $('#res1').append('<br />');
+    }
+
+</script>
+<hr />
+
+<h1></h1>
 </body>
 </html>
